@@ -187,6 +187,7 @@ public class NetApiTestUtil {
 
 
         jFrame.setVisible(true);
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 
