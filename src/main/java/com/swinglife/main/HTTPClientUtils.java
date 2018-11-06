@@ -26,56 +26,6 @@ import java.util.List;
 public class HTTPClientUtils {
 
 
-    private static final String APPKEY = "RC-App-Key";
-    private static final String NONCE = "RC-Nonce";
-    private static final String TIMESTAMP = "RC-Timestamp";
-    private static final String SIGNATURE = "RC-Signature";
-
-    //上次调用URL
-    private static String oldUrlName = "";
-    //请求次数
-    private static int requestCount = 0;
-
-//    /**
-//     * 上传文件到nimg
-//     *
-//     * @param file
-//     *            上传的文件
-//     * @return 响应结果
-//     */
-//    public String httpClientUploadFile(MultipartFile file) {
-//        final String remote_url = "http://39.108.210.116:9097/01/upload";
-//        CloseableHttpClient httpClient = HttpClients.createDefault();
-//        String result = "";
-//        try {
-//            String fileName = file.getOriginalFilename();
-//            HttpPost httpPost = new HttpPost(remote_url);
-//            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-//            builder.addBinaryBody("userfile", file.getInputStream(), ContentType.MULTIPART_FORM_DATA, fileName);// 文件流
-//            HttpEntity entity = builder.build();
-//            httpPost.setEntity(entity);
-//            HttpResponse response = httpClient.execute(httpPost);
-//            HttpEntity responseEntity = response.getEntity();
-//            if (responseEntity != null) {
-//                result = EntityUtils.toString(responseEntity, Charset.forName("UTF-8"));
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                httpClient.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return result;
-//    }
-
-
-
-
     // 设置body体
     public static void setBodyParameter(StringBuilder sb, HttpURLConnection conn)
             throws IOException {
@@ -149,16 +99,6 @@ public class HTTPClientUtils {
         return null;
     }
 
-    private void requestCount(String url){
-        if(url.equals(oldUrlName)){
-            requestCount++;
-        }else{
-            requestCount = 1;
-        }
-        oldUrlName = url;
-        if(requestCount>=2){
-        }
-    }
 
     /****
      * GET 访问请求
@@ -169,7 +109,6 @@ public class HTTPClientUtils {
     public String httpGet(String url) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         long startTime=System.currentTimeMillis();   //获取开始时间
-        requestCount(url);
         try {
             // 创建httpget.
             HttpGet httpget = new HttpGet(url);
@@ -261,7 +200,6 @@ public class HTTPClientUtils {
      */
     public String httpPost(String url, List<NameValuePair> formparams) {
         long startTime=System.currentTimeMillis();   //获取开始时间
-        requestCount(url);
         // 创建参数队列
         UrlEncodedFormEntity uefEntity;
         try {
@@ -278,36 +216,5 @@ public class HTTPClientUtils {
 
 
 
-    public static void main(String args[]){
-        HTTPClientUtils httpClientUtils = new HTTPClientUtils();
-//        List list = new ArrayList();
-//        list.add(new BasicNameValuePair("account","test"));
-//        list.add(new BasicNameValuePair("password","123456"));
-//       String result =  httpClientUtils.httpPost("http://120.55.37.207:8080/system/tologin",list);
-//        System.out.println(result);
-        httpClientUtils.httpGet("http://120.55.37.207:8080/system/tologin");
-    }
-
-//
-//
-//    public static void main(String[] args) throws IOException {
-//        HttpClient client = new HttpClient();
-//        HttpMethod method = new GetMethod("http://www.baidu.com");
-//        int statusCode = 0;
-//        try {
-//            statusCode = client.executeMethod(method);
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//            System.out.printf("访问失败");
-//        }
-//
-//        System.out.println("网页访问返回代码:"+statusCode);
-//        //判断是否返回200（200代表成功）
-//        if(statusCode!= HttpStatus.SC_OK){
-//            System.out.printf("网址失败");
-//        }else {
-//            System.out.printf("网址正确");
-//        }
-//    }
 
 }
